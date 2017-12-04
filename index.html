@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>jQuery商城常用楼层定位菜单代码</title>
+
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	html,body{
+		font-size:16px;
+		font-family:'microsoft YaHei';
+	}
+	a{
+		text-decoration:none;
+		color:#999;
+	}
+	ul li{
+		list-style:none;
+	}
+	.slider{
+		position:fixed;
+		top:50%;
+		left:2%;
+		transform:translateY(-50%);
+		-webkit-transform:translateY(-50%);
+	}
+	.slider ul li{
+		width:55px;
+		height:30px;
+		border-radius:10px;
+		background:lightgreen;
+		/*margin-bottom:10px;*/
+		text-align:center;
+		line-height:30px;
+	}
+	.slider ul li.active{
+		background:green;
+	}
+	.slider ul li.active a{
+		color:#fff;
+	}
+	.slider ul li:nth-of-type(even){
+		width:3px;
+		height:35px;
+		background:lightgreen;
+		margin:0 auto;
+	}
+	#header{
+		height:280px;
+		text-align:center;
+		line-height:280px;
+		font-size:60px;
+		background:mediumpurple;
+	}
+	.content{
+		width:1200px;
+		margin:0 auto;
+	}
+	.content .section{
+		height:700px;
+		text-align:center;
+		line-height:700px;
+		font-size:60px;
+		margin-bottom:20px;
+	}
+	.content .section1{
+		background:lightpink;
+	}
+	.content .section2{
+		background:lightblue;
+	}
+	.content .section3{
+		background:lightgreen;
+	}
+	.content .section4{
+		background:lightyellow;
+	}
+	.content .section5{
+		background:deeppink;
+	}
+	.content .section6{
+		background:lightcyan;
+	}
+</style>
+
+</head>
+<body><script src="/demos/googlegg.js"></script>
+
+<div class="container">
+	<div id="slider" class="slider">
+		<ul>
+			<li class="active"><a href="#">一楼</a></li>
+			<li class="line"></li>
+			<li><a href="#">二楼</a></li>
+			<li class="line"></li>
+			<li><a href="#">三楼</a></li>
+			<li class="line"></li>
+			<li><a href="#">四楼</a></li>
+			<li class="line"></li>
+			<li><a href="#">五楼</a></li>
+			<li class="line"></li>
+			<li><a href="#">六楼</a></li>
+		</ul>
+	</div>
+	<!-- <div id="header">头部</div> -->
+	<div id="content" class="content">
+		<div class="section section1 div">对应一楼内容部分</div>
+		<div class="div"></div>
+		<div class="section section2 div">对应二楼内容部分</div>
+		<div class="div"></div>
+		<div class="section section3 div">对应三楼内容部分</div>
+		<div class="div"></div>
+		<div class="section section4 div">对应四楼内容部分</div>
+		<div class="div"></div>
+		<div class="section section5 div">对应五楼内容部分</div>
+		<div class="div"></div>
+		<div class="section section6 div">对应六楼内容部分</div>
+	</div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(function(){
+	$("li:odd").hide();//li的第偶数个隐藏
+	$("#slider ul li.active").next().show();//激活的li下面那条线显示
+
+	$(window).scroll(function(){
+		var winHeight = $(window).height();//浏览器可视窗口的高度
+		var scrollHeight = $(window).scrollTop();//鼠标滚动的距离
+		// if($("#header").height()){   //判断侧边栏什么时候显示
+			$("#content .section").each(function(){
+				if(winHeight+scrollHeight-$(this).offset().top>winHeight/2){
+					$("#slider ul li").removeClass("active").prev(".line").hide();
+					$("#slider ul li").eq($(this).index()).addClass("active").next(".line").show();
+				}
+			})
+		// }
+	})
+	$("#slider ul li").click(function(){
+
+		var current = $("#content .div").eq($(this).index()).offset().top;
+		$("html,body").animate({
+			"scrollTop":current
+		},500);
+		$(this).addClass("active").siblings().removeClass("active").siblings(".line").hide();
+		$(this).eq($(this).index()).addClass("active").next(".line").show();
+	})
+})
+</script>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>适用浏览器：IE8、360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗.</p>
+<p>来源：<a href="http://www.lanrenzhijia.com/" target="_blank">懒人素材</a></p>
+</div>
+</body>
+</html>
